@@ -1,16 +1,89 @@
 var vents = {
-    items : {
-        cli : '',
-        date_joined : '',
-        subtotal : 0.00,
-        iva : 0.00,
-        total : 0.00,
-        products : []
+    items: {
+        cli: '',
+        date_joined: '',
+        subtotal: 0.00,
+        iva: 0.00,
+        total: 0.00,
+        products: []
     },
-    add : function () {
-        
+    calculate_invoice: function () {
+        var subtotal=0.00;
+        var iva= $('input[name="iva"]').val();
+        $.each(this.items.products, function (pos, dict) {
+            dict.subtotal=dict.cant*parseFloat(dict.pvp);
+            subtotal+=dict.subtotal;
+            //console.log(subtotal);
+            // console.log(dict);
+        });
+        this.items.subtotal=subtotal;
+        this.items.iva = this.items.subtotal * iva;
+        this.items.total = this.items.subtotal + this.items.iva;
+
+        $('input[name="subtotal"]').val(this.items.subtotal.toFixed(2));
+        $('input[name="ivacalc"]').val(this.items.iva.toFixed(2));
+        $('input[name="total"]').val(this.items.total.toFixed(2));
+    },
+    add: function(item){
+        this.items.products.push(item); /* Acumulo los items */
+        this.list(); /* Genero la lista por cada item con su formato definido en la funcion */
+    },
+    list: function () {
+        this.calculate_invoice();
+        $('#tblProducts').DataTable({
+            responsive: true,
+            autoWidth: false,
+            destroy: true,
+            deferRender: true,
+            data: this.items.products,
+            columns: [
+                { "data": "id" },
+                { "data": "name" },
+                { "data": "cat.name" },
+                { "data": "pvp" },
+                { "data": "cant" },
+                { "data": "subtotal" },
+            ],
+            columnDefs: [
+                {
+                    targets: [0],
+                    class: 'text-center',
+                    orderable: false,
+                    render: function (data, type, row) {
+                        return '<a rel="remove" class="btn btn-danger btn-xs btn-flat"><i class="fas fa-trash-alt"></i></a>'
+                    }
+                },
+                {
+                    targets: [-3],
+                    class: 'text-center',
+                    orderable: false,
+                    render: function (data, type, row) {
+                        return '$' + parseFloat(data).toFixed(2);
+                    }
+                },
+                {
+                    targets: [-2],
+                    class: 'text-center',
+                    orderable: false,
+                    render: function (data, type, row) {
+                        return '<input type="text" name="cant" class="form-control form-control-sm" autocomplete="off" value="'+row.cant+'">'
+                    }
+                },
+                {
+                    targets: [-1],
+                    class: 'text-center',
+                    orderable: false,
+                    render: function (data, type, row) {
+                        return '$'+parseFloat(data).toFixed(2);
+                    }
+                },
+            ],
+            initComplete: function (settings, json) {
+
+            }
+        });
     }
-}
+};
 
 $(function () {
     $('.select2').select2({
@@ -28,12 +101,17 @@ $(function () {
     $("input[name='iva']").TouchSpin({
         min: 0,
         max: 100,
-        step: 0.1,
+        step: 0.01,
         decimals: 2,
         boostat: 5,
         maxboostedstep: 10,
         postfix: '%'
-    });
+    }).on('change', function(){
+        // console.clear();
+        // console.log($(this).val());
+        vents.calculate_invoice();
+    })
+    .val(0.21); /* Defino el valor por defecto del IVA */
 
     // Busqueda de mis productos
     $('input[name="search"]').autocomplete({
@@ -57,7 +135,13 @@ $(function () {
         delay: 500,
         minLength: 1,
         select: function (event, ui) {
-            console.log(ui.item);
+            event.preventDefault(); /* si no coloco esto no puedo llamar a this.val('') */
+            console.clear();
+            ui.item.cant = 1; /* le paso la cantidad el producto seleccionado */
+            ui.item.subtotal = 0.00; /* le paso la cantidad el producto seleccionado */
+            console.log(vents.items);
+            vents.add(ui.item); /* llamo a la funcion add que acumula y lista los productos en la datatable */
+            $(this).val('');
         }
     });
 });

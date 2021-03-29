@@ -29,11 +29,11 @@ class SaleCreateView(LoginRequiredMixin, ValidatePermissionRequiredMixin, Create
             action = request.POST['action']
             if action == 'search_products':
                 data = []
-                prods = Product.objects.filter(name__icontains=request.POST['term'])
+                prods = Product.objects.filter(name__icontains=request.POST['term'])[0:10] # Poner una limitante por si tengo muchos productos
                 for i in prods:
                     item = i.toJSON()
                     item['value'] = i.name
-                    data.append[item]
+                    data.append(item)
             else:
                 data['error'] = 'No ha ingresado a ninguna opción'
         except Exception as e:
