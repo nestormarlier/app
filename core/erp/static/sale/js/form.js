@@ -1,3 +1,4 @@
+var tblProducts;
 var vents = {
     items: {
         cli: '',
@@ -8,15 +9,15 @@ var vents = {
         products: []
     },
     calculate_invoice: function () {
-        var subtotal=0.00;
-        var iva= $('input[name="iva"]').val();
+        var subtotal = 0.00;
+        var iva = $('input[name="iva"]').val();
         $.each(this.items.products, function (pos, dict) {
-            dict.subtotal=dict.cant*parseFloat(dict.pvp);
-            subtotal+=dict.subtotal;
+            dict.subtotal = dict.cant * parseFloat(dict.pvp);
+            subtotal += dict.subtotal;
             //console.log(subtotal);
             // console.log(dict);
         });
-        this.items.subtotal=subtotal;
+        this.items.subtotal = subtotal;
         this.items.iva = this.items.subtotal * iva;
         this.items.total = this.items.subtotal + this.items.iva;
 
@@ -24,13 +25,13 @@ var vents = {
         $('input[name="ivacalc"]').val(this.items.iva.toFixed(2));
         $('input[name="total"]').val(this.items.total.toFixed(2));
     },
-    add: function(item){
+    add: function (item) {
         this.items.products.push(item); /* Acumulo los items */
         this.list(); /* Genero la lista por cada item con su formato definido en la funcion */
     },
     list: function () {
         this.calculate_invoice();
-        $('#tblProducts').DataTable({
+        tblProducts = $('#tblProducts').DataTable({
             responsive: true,
             autoWidth: false,
             destroy: true,
@@ -66,7 +67,7 @@ var vents = {
                     class: 'text-center',
                     orderable: false,
                     render: function (data, type, row) {
-                        return '<input type="text" name="cant" class="form-control form-control-sm" autocomplete="off" value="'+row.cant+'">'
+                        return '<input type="text" name="cant" class="form-control form-control-sm  input-sm" autocomplete="off" value="' + row.cant + '">'
                     }
                 },
                 {
@@ -74,10 +75,19 @@ var vents = {
                     class: 'text-center',
                     orderable: false,
                     render: function (data, type, row) {
-                        return '$'+parseFloat(data).toFixed(2);
+                        return '$' + parseFloat(data).toFixed(2);
                     }
                 },
             ],
+            rowCallback(row, data, displayNum, displayIndex, dataIndex) {
+                // console.log(row);
+                // console.log(data);
+                $(row).find('input[name="cant"]').TouchSpin({
+                    min: 1,
+                    max: 1000000,
+                    step: 1
+                });
+            },
             initComplete: function (settings, json) {
 
             }
@@ -106,12 +116,12 @@ $(function () {
         boostat: 5,
         maxboostedstep: 10,
         postfix: '%'
-    }).on('change', function(){
+    }).on('change', function () {
         // console.clear();
         // console.log($(this).val());
         vents.calculate_invoice();
     })
-    .val(0.21); /* Defino el valor por defecto del IVA */
+        .val(0.21); /* Defino el valor por defecto del IVA */
 
     // Busqueda de mis productos
     $('input[name="search"]').autocomplete({
@@ -136,7 +146,7 @@ $(function () {
         minLength: 1,
         select: function (event, ui) {
             event.preventDefault(); /* si no coloco esto no puedo llamar a this.val('') */
-            console.clear();
+            // console.clear();
             ui.item.cant = 1; /* le paso la cantidad el producto seleccionado */
             ui.item.subtotal = 0.00; /* le paso la cantidad el producto seleccionado */
             console.log(vents.items);
@@ -144,4 +154,14 @@ $(function () {
             $(this).val('');
         }
     });
+
+    // evento cantidad
+    $('#tblProducts tbody').on('change', 'input[name="cant"]', function () {
+        console.clear;
+        var cant = parseInt($(this).val());
+        var tr = tblProducts.cell($(this).closest('td, li')).index();
+        vents.items.products[tr.row].cant = cant;
+        vents.calculate_invoice();
+        $('td:eq(5)', tblProducts.row(tr.row).node()).html('$' + vents.items.products[tr.row].subtotal.toFixed(2));
+    })
 });
