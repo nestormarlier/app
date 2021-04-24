@@ -41,31 +41,20 @@
     </div>
     <div class="card-body">
         <div class="row">
-            <div class="col-lg-12">
+            <div class="col-lg-12"> <!-- DATATABLE ORDENES DE PRODUCCION -->
                 <div class="card card-secondary">
                     <div class="card-header">
                         <h3 class="card-title"><i class="fas fa-boxes"></i> Órdenes de producción </h3>
                     </div>
                     <div class="card-body">
-                        <!-- <div class="form-group"></div>
-                        <label>Buscador de productos:</label>
-                        <div class="input-group input-group-sm">
-                            <input type="text" class="form-control" name="search"
-                            placeholder="Ingrese una descripción" autocomplete="off">
-                            <span class="input-group-append">
-                                <button type="button" class="btn btn-info btn-flat btn-danger"><i
-                                        class="fas fa-times"></i></button>
-                            </span>
-                        </div> -->
                         <hr>
                         <table class="table table-bordered" id="tblOrdenes">
                             <thead>
                                 <tr>
-                                    <th>Posición</th>
-                                    <th>Ficha técnica</th>
-                                    <th>Kg. a producir</th>
-                                    <th>Mts. a producir</th>
-                                    <th>Opciones</th>
+                                    <th scope="col" style="width: 10%;">Nro. Orden</th>
+                                    <th scope="col" style="width: 20%;">Impresora</th>
+                                    <th scope="col" style="width: 50%;">Pedido de venta</th>
+                                    <th scope="col" style="width: 50%;">Opciones</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -74,28 +63,16 @@
                         </table>
                     </div>
                 </div>
-
             </div>
-
-            <div class="col-lg-12">
+            <div class="col-lg-12"> <!-- DATATABLE PARTE DE PRODUCCION -->
                 <div class="card card-secondary">
                     <div class="card-header">
                         <h3 class="card-title"><i class="fas fa-file-signature"></i> Parte de producción y de impresión
                         </h3>
                     </div>
                     <div class="card-body">
-                        <!-- <div class="form-group"></div>
-                        <label>Buscador de productos:</label>
-                        <div class="input-group input-group-sm">
-                            <input type="text" class="form-control" name="search"
-                            placeholder="Ingrese una descripción" autocomplete="off">
-                            <span class="input-group-append">
-                                <button type="button" class="btn btn-info btn-flat btn-danger"><i
-                                        class="fas fa-times"></i></button>
-                            </span>
-                        </div> -->
                         <hr>
-                        <table class="table table-bordered" id="tblOrdenes">
+                        <table class="table table-bordered" id="tblParteCabecera">
                             <thead>
                                 <tr>
                                     <th>Supervisor</th>
@@ -103,12 +80,7 @@
                                     <th>2do ayudante</th>
                                     <th>Impresora</th>
                                     <th>Ficha técnica</th>
-                                    <th>Kg. a producir</th>
-                                    <th>Kg. producidos</th>
-                                    <th>Metros a producir</th>
-                                    <th>Metros producidos</th>
-                                    <th>Kg. Registro</th>
-                                    <th>Mts. registro</th>
+                                    <th>Opciones</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -116,7 +88,25 @@
                             </tbody>
                         </table>
                     </div>
+                    <div class="card-body">
+                        <hr>
+                        <table class="table table-bordered" id="tblParteCuerpo">
+                            <thead>
+                                <tr>
+                                    <th>Kg. a producir</th>
+                                    <th>Kg. a producidos</th>
+                                    <th>Mts. a producir</th>
+                                    <th>Mts. a producidos</th>
+                                    <th>Kg. registro</th>
+                                    <th>Mts. registro</th>
+                                    <th>Opciones</th>
+                                </tr>
+                            </thead>
+                            <tbody>
 
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
             <div class="col-lg-12">

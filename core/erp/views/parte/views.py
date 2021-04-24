@@ -27,18 +27,15 @@ class ParteCreateView(LoginRequiredMixin, ValidatePermissionRequiredMixin, Creat
         data = {}
         try:
             action = request.POST['action']
-            if action == 'search_products':
+            if action == 'searchdata':
                 data = []
-                prods = Product.objects.filter(name__icontains=request.POST['term'])[0:10] # Poner una limitante por si tengo muchos productos
-                for i in prods:
-                    item = i.toJSON()
-                    item['value'] = i.name
-                    data.append(item)
+                for i in OrdenesProduccion.objects.all():
+                    data.append(i.toJSON())
             else:
-                data['error'] = 'No ha ingresado a ninguna opción'
+                data['error'] = 'Ha ocurrido un error'
         except Exception as e:
             data['error'] = str(e)
-        return JsonResponse(data, safe=False) 
+        return JsonResponse(data, safe=False)
         #para que se pueda serializar debo especificar cuando es coleccion de elementos que el safe sea igual a False
 
     def get_context_data(self, **kwargs):
