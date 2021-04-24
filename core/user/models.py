@@ -11,3 +11,13 @@ class User(AbstractUser):
         if self.image:
             return '{}{}'.format(MEDIA_URL, self.image)
         return '{}{}'.format(STATIC_URL, 'img/empty.png')
+
+    CATEGORIA_CHOICES = [
+        ('SUPERVISOR', 'SUPERVISOR'),
+        ('MAQUINISTA', 'MAQUINISTA'),
+        ('1ER AYUDANTE', '1ER AYUDANTE'),
+        ('2DO AYUDANTE', '2DO AYUDANTE'),
+        ('MECANICO', 'MECÁNICO'),
+    ]
+
+    categoria = models.TextField(choices=CATEGORIA_CHOICES)

@@ -3,10 +3,11 @@
 <nav class="main-header navbar navbar-expand navbar-dark navbar-primary">
     <div class="container">
         <a href="{% url 'erp:dashboard' %}" class="navbar-brand">
-            <img src="{% static 'img/logo.png' %}" alt="AdminLTE Logo"
+            <!-- <img src="{% static 'img/logo.png' %}" alt="AdminLTE Logo"
                  class="brand-image"
                  style="opacity: .8">
-            <span class="brand-text font-weight-light">Hades</span>
+            <span class="brand-text font-weight-light">Hades</span> -->
+            <i class="fas fa-wind fa-2x"> Waira</i>
         </a>
         <button class="navbar-toggler order-1" type="button" data-toggle="collapse" data-target="#navbarCollapse"
                 aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
@@ -24,6 +25,8 @@
                         <li><a href="{% url 'erp:category_list' %}" class="dropdown-item"><i class="fas fa-truck-loading"></i> Categorías</a></li>
                         <li><a href="{% url 'erp:product_list' %}" class="dropdown-item"><i class="fas fa-boxes"></i> Productos</a></li>
                         <li><a href="{% url 'erp:client_list' %}" class="dropdown-item"><i class="fas fa-users"></i> Clientes</a></li>
+                        <li><a href="{% url 'erp:parte_create' %}" class="dropdown-item"><i class="fas fa-file-signature"></i> Parte de producción</a></li>
+                        <li><a href="{% url 'admin:index' %}" class="dropdown-item"><i class="fas fa-server"></i> Sistema administración</a></li>
                         <li><a href="#" class="dropdown-item"><i class="fas fa-shopping-cart"></i> Ventas</a></li>
                     </ul>
                 </li>

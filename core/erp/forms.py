@@ -2,7 +2,7 @@ from datetime import datetime
 
 from django.forms import *
 
-from core.erp.models import Category, Product, Client, Sale
+from core.erp.models import Category, Product, Client, Sale, ParteImpresion
 
 
 class CategoryForm(ModelForm):
@@ -43,7 +43,6 @@ class CategoryForm(ModelForm):
             data['error'] = str(e)
         return data
 
-
 class ProductForm(ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -77,7 +76,6 @@ class ProductForm(ModelForm):
         except Exception as e:
             data['error'] = str(e)
         return data
-
 
 class ClientForm(ModelForm):
     def __init__(self, *args, **kwargs):
@@ -134,7 +132,6 @@ class ClientForm(ModelForm):
     #         raise forms.ValidationError('Validacion xxx')
     #         # self.add_error('name', 'Le faltan caracteres')
     #     return cleaned
-
 
 class TestForm(Form):
     categories = ModelChoiceField(queryset=Category.objects.all(), widget=Select(attrs={
@@ -210,3 +207,55 @@ class SaleForm(ModelForm):
     #         # self.add_error('name', 'Le faltan caracteres')
     #     return cleaned
 
+class ParteForm(ModelForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+    class Meta:
+        model = ParteImpresion
+        fields = '__all__'
+        widgets = {
+            'ordenes': Select(attrs={
+                'class': 'form-control select2',
+                'style': 'width: 100%'
+
+            }),
+            'date_joined': DateInput(format='%Y-%m-%d', attrs={
+                'value': datetime.now().strftime('%Y-%m-%d'),
+                'autocomplete': 'off',
+                'class': 'form-control datetimepicker-input',
+                'id': 'date_joined',
+                'data-target': '#date_joined',
+                'data-toggle': 'datetimepicker'
+                }),
+            'iva': TextInput(attrs={
+                'class':'form-control',
+            }),
+            'subtotal': TextInput(attrs={
+                'disabled': True,
+                'class': 'form-control',
+            }),
+            'total': TextInput(attrs={
+                'disabled': True,
+                'class': 'form-control',
+            })
+        }
+
+    def save(self, commit=True):
+        data = {}
+        form = super()
+        try:
+            if form.is_valid():
+                form.save()
+            else:
+                data['error'] = form.errors
+        except Exception as e:
+            data['error'] = str(e)
+        return data
+
+    # def clean(self):
+    #     cleaned = super().clean()
+    #     if len(cleaned['name']) <= 50:
+    #         raise forms.ValidationError('Validacion xxx')
+    #         # self.add_error('name', 'Le faltan caracteres')
+    #     return cleaned

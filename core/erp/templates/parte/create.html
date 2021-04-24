@@ -1,0 +1,239 @@
+{% extends 'list.html' %}
+{% load static %}
+
+{% block head_list %}
+
+<link href="{% static 'lib/jquery-ui-1.12.1/jquery-ui.min.css' %}" rel="stylesheet" />
+<script src="{% static 'lib/jquery-ui-1.12.1/jquery-ui.min.js' %}"></script>
+
+<link href="{% static 'lib/bootstrap-touchspin-4.3.0/jquery.bootstrap-touchspin.css' %}" rel="stylesheet" />
+<script src="{% static 'lib/bootstrap-touchspin-4.3.0/jquery.bootstrap-touchspin.js' %}"></script>
+
+<link href="{% static 'lib/select2-4.0.13/css/select2.min.css' %}" rel="stylesheet" />
+<link href="{% static 'lib/select2-4.0.13/css/select2-bootstrap4.min.css' %}" rel="stylesheet" />
+<script src="{% static 'lib/select2-4.0.13/js/select2.min.js' %}"></script>
+<script src="{% static 'lib/select2-4.0.13/js/i18n/es.js' %}"></script>
+
+<script src="{% static 'lib/moment-2.25.3/moment-with-locales.js' %}"></script>
+<script src="{% static 'lib/tempusdominus-bootstrap-4/tempusdominus-bootstrap-4.min.js' %}"></script>
+<link href="{% static 'lib/tempusdominus-bootstrap-4/tempusdominus-bootstrap-4.min.css' %}" rel="stylesheet" />
+
+<link href="{% static 'lib/bootstrap-touchspin-4.3.0/jquery.bootstrap-touchspin.css' %}" rel="stylesheet" />
+<script src="{% static 'lib/bootstrap-touchspin-4.3.0/jquery.bootstrap-touchspin.js' %}"></script>
+
+<script src="{% static 'parte/js/form.js' %}"></script>
+
+
+
+{% endblock %}
+
+{% block content %}
+<div class="card card-primary">
+    <div class="card-header">
+        <h3 class="card-title">
+            {% if action == 'add' %}
+            <i class="fas fa-plus"></i>
+            {% else %}
+            <i class="fas fa-edit"></i>
+            {% endif %}
+            {{ title }}
+        </h3>
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="card card-secondary">
+                    <div class="card-header">
+                        <h3 class="card-title"><i class="fas fa-boxes"></i> Órdenes de producción </h3>
+                    </div>
+                    <div class="card-body">
+                        <!-- <div class="form-group"></div>
+                        <label>Buscador de productos:</label>
+                        <div class="input-group input-group-sm">
+                            <input type="text" class="form-control" name="search"
+                            placeholder="Ingrese una descripción" autocomplete="off">
+                            <span class="input-group-append">
+                                <button type="button" class="btn btn-info btn-flat btn-danger"><i
+                                        class="fas fa-times"></i></button>
+                            </span>
+                        </div> -->
+                        <hr>
+                        <table class="table table-bordered" id="tblOrdenes">
+                            <thead>
+                                <tr>
+                                    <th>Posición</th>
+                                    <th>Ficha técnica</th>
+                                    <th>Kg. a producir</th>
+                                    <th>Mts. a producir</th>
+                                    <th>Opciones</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="col-lg-12">
+                <div class="card card-secondary">
+                    <div class="card-header">
+                        <h3 class="card-title"><i class="fas fa-file-signature"></i> Parte de producción y de impresión
+                        </h3>
+                    </div>
+                    <div class="card-body">
+                        <!-- <div class="form-group"></div>
+                        <label>Buscador de productos:</label>
+                        <div class="input-group input-group-sm">
+                            <input type="text" class="form-control" name="search"
+                            placeholder="Ingrese una descripción" autocomplete="off">
+                            <span class="input-group-append">
+                                <button type="button" class="btn btn-info btn-flat btn-danger"><i
+                                        class="fas fa-times"></i></button>
+                            </span>
+                        </div> -->
+                        <hr>
+                        <table class="table table-bordered" id="tblOrdenes">
+                            <thead>
+                                <tr>
+                                    <th>Supervisor</th>
+                                    <th>1er Ayudante</th>
+                                    <th>2do ayudante</th>
+                                    <th>Impresora</th>
+                                    <th>Ficha técnica</th>
+                                    <th>Kg. a producir</th>
+                                    <th>Kg. producidos</th>
+                                    <th>Metros a producir</th>
+                                    <th>Metros producidos</th>
+                                    <th>Kg. Registro</th>
+                                    <th>Mts. registro</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+
+                            </tbody>
+                        </table>
+                    </div>
+
+                </div>
+            </div>
+            <div class="col-lg-12">
+                <div class="card card-secondary">
+                    <div class="card-header">
+                        <h3 class="card-title"><i class="fas fa-stop"></i> CAMBIO MECÁNICO </h3>
+                    </div>
+                    <div class="card-body">
+                        <hr>
+                        <table class="table table-bordered" id="tblCambios">
+                            <thead>
+                                <tr>
+                                    <th>Fecha inicio</th>
+                                    <th>Demora</th>
+                                    <th>Fecha fin</th>
+                                    <th>Opciones</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="card card-secondary">
+                    <div class="card-header">
+                        <h3 class="card-title"><i class="fas fa-stop"></i> RM.AC.AP (Setup) </h3>
+                    </div>
+                    <div class="card-body">
+                        <hr>
+                        <table class="table table-bordered" id="tblSetup">
+                            <thead>
+                                <tr>
+                                    <th>Fecha inicio</th>
+                                    <th>Demora</th>
+                                    <th>Fecha fin</th>
+                                    <th>Opciones</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="card card-secondary">
+                    <div class="card-header">
+                        <h3 class="card-title"><i class="fas fa-stop"></i> PRODUCCIÓN </h3>
+                    </div>
+                    <div class="card-body">
+                        <hr>
+                        <table class="table table-bordered" id="tblProduccion">
+                            <thead>
+                                <tr>
+                                    <th>Fecha inicio</th>
+                                    <th>Demora</th>
+                                    <th>Fecha fin</th>
+                                    <th>Opciones</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="card card-secondary">
+                    <div class="card-header">
+                        <h3 class="card-title"><i class="fas fa-stop"></i> OBSERVACIONES GENERALES </h3>
+                    </div>
+                    <div class="card-body">
+                        <hr>
+                        <table class="table table-bordered" id="tblObsGles">
+                            <thead>
+                                <tr>
+                                    <th>Fecha inicio</th>
+                                    <th>Observación</th>
+                                    <th>Fecha fin</th>
+                                    <th>Opciones</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="card card-secondary">
+                    <div class="card-header">
+                        <h3 class="card-title"><i class="fas fa-stop"></i> OBSERVACIONES MANTENIMIENTO </h3>
+                    </div>
+                    <div class="card-body">
+                        <hr>
+                        <table class="table table-bordered" id="tblMantenimiento">
+                            <thead>
+                                <tr>
+                                    <th>Usuario mantenimiento</th>
+                                    <th>Fecha</th>
+                                    <th>Observación</th>
+                                    <th>Opciones</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card-footer">
+        <a class="btn btn-primary btn-flat btnTest">
+            <i class="fas fa-save"></i> Guardar registro
+        </a>
+        <a href="{{ list_url }}" class="btn btn-danger btn-flat">
+            <i class="fas fa-times"></i></button> Cancelar
+        </a>
+    </div>
+</div>
+{% endblock %}
