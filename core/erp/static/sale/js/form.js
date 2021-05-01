@@ -144,8 +144,8 @@ $(function () {
         },
         delay: 500,
         minLength: 1,
-        select: function (event, ui) {
-            event.preventDefault(); /* si no coloco esto no puedo llamar a this.val('') */
+        function (event, ui) {
+            event.pselectreventDefault(); /* si no coloco esto no puedo llamar a this.val('') */
             // console.clear();
             ui.item.cant = 1; /* le paso la cantidad el producto seleccionado */
             ui.item.subtotal = 0.00; /* le paso la cantidad el producto seleccionado */

@@ -324,6 +324,8 @@ class OrdenesProduccion(models.Model):
     
     def toJSON(self):
         item = model_to_dict(self)
+        item['pedido_venta']= self.pedido_venta.toJSON()
+        item['impresora']= self.impresora.toJSON()
         return item
 
 class ParteImpresion(models.Model):

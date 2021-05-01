@@ -210,52 +210,45 @@ class SaleForm(ModelForm):
 class ParteForm(ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
+        for form in self.visible_fields():
+            form.field.widget.attrs['class'] = 'form-control'
+            form.field.widget.attrs['autocomplete'] = 'off'
 
     class Meta:
         model = ParteImpresion
         fields = '__all__'
         widgets = {
+            # Ordenes de produccion generados
             'ordenes': Select(attrs={
                 'class': 'form-control select2',
                 'style': 'width: 100%'
 
             }),
-            'date_joined': DateInput(format='%Y-%m-%d', attrs={
-                'value': datetime.now().strftime('%Y-%m-%d'),
-                'autocomplete': 'off',
-                'class': 'form-control datetimepicker-input',
-                'id': 'date_joined',
-                'data-target': '#date_joined',
-                'data-toggle': 'datetimepicker'
-                }),
-            'iva': TextInput(attrs={
-                'class':'form-control',
+            # Usuario maquinista logueado
+            'maquinista': Select(attrs={
+                'class': 'form-control select2',
+                'style': 'width: 100%'
             }),
-            'subtotal': TextInput(attrs={
-                'disabled': True,
-                'class': 'form-control',
+            # Supervisor de turno
+            'supervisor': Select(attrs={
+                'class': 'form-control select2',
+                'style': 'width: 100%'
+
             }),
-            'total': TextInput(attrs={
-                'disabled': True,
-                'class': 'form-control',
-            })
+            # Primer ayudante
+            'ayudante1ero': Select(attrs={
+                'class': 'form-control select2',
+                'style': 'width: 100%'
+
+            }),
+            # Segundo ayudante
+            'ayudante2do': Select(attrs={
+                'class': 'form-control select2',
+                'style': 'width: 100%'
+            }),
+            # Impresora -> lo trae la orden
+            'impresora': Select(attrs={
+                'class': 'form-control select2',
+                'style': 'width: 100%'
+            }),
         }
-
-    def save(self, commit=True):
-        data = {}
-        form = super()
-        try:
-            if form.is_valid():
-                form.save()
-            else:
-                data['error'] = form.errors
-        except Exception as e:
-            data['error'] = str(e)
-        return data
-
-    # def clean(self):
-    #     cleaned = super().clean()
-    #     if len(cleaned['name']) <= 50:
-    #         raise forms.ValidationError('Validacion xxx')
-    #         # self.add_error('name', 'Le faltan caracteres')
-    #     return cleaned

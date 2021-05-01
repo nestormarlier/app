@@ -16,7 +16,7 @@ class ParteCreateView(LoginRequiredMixin, ValidatePermissionRequiredMixin, Creat
     form_class = ParteForm
     template_name = 'parte/create.html'
     success_url = reverse_lazy('index')
-    permission_required = 'erp.add_sale'
+    permission_required = 'erp.add_parte' #si trabajo con Superuser no hay problema para usarlo, ojo permisos usuarios
     url_redirect = success_url
 
     @method_decorator(csrf_exempt)

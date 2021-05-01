@@ -21,3 +21,7 @@ class User(AbstractUser):
     ]
 
     categoria = models.TextField(choices=CATEGORIA_CHOICES)
+
+    def toJSON(self):
+        item= model_to_dict(self)
+        item['categoria']= self.categoria.toJSON()
