@@ -2,7 +2,8 @@ from datetime import datetime
 
 from django.forms import *
 
-from core.erp.models import Category, Product, Client, Sale, ParteImpresion
+from core.erp.models import Category, Product, Client, Sale,Impresora, ParteImpresion
+from core.user.models import User
 
 
 class CategoryForm(ModelForm):
@@ -213,6 +214,9 @@ class ParteForm(ModelForm):
         for form in self.visible_fields():
             form.field.widget.attrs['class'] = 'form-control'
             form.field.widget.attrs['autocomplete'] = 'off'
+            self.fields['supervisor'].queryset = User.objects.filter(categoria='SUPERVISOR')
+            self.fields['ayudante1ero'].queryset = User.objects.filter(categoria='1ER AYUDANTE')
+            self.fields['ayudante2do'].queryset = User.objects.filter(categoria='2DO AYUDANTE')
 
     class Meta:
         model = ParteImpresion
@@ -224,31 +228,30 @@ class ParteForm(ModelForm):
                 'style': 'width: 100%'
 
             }),
-            # Usuario maquinista logueado
-            'maquinista': Select(attrs={
-                'class': 'form-control select2',
-                'style': 'width: 100%'
-            }),
-            # Supervisor de turno
-            'supervisor': Select(attrs={
-                'class': 'form-control select2',
-                'style': 'width: 100%'
-
-            }),
+            # # Usuario maquinista logueado
+            # 'maquinista': Select(attrs={
+            #     'class': 'form-control select2',
+            #     'style': 'width: 100%'
+            # }),
+            # # Supervisor de turno
+            # 'supervisor' : Select(attrs={
+            #     'class': 'form-control',
+            #     'style': 'width: 100%'
+            # })
             # Primer ayudante
-            'ayudante1ero': Select(attrs={
-                'class': 'form-control select2',
-                'style': 'width: 100%'
+            # # 'ayudante1ero': ModelChoiceField(queryset=User.objects.filter(categoria='1ER')attrs={
+            #     'class': 'form-control select2',
+            #     'style': 'width: 100%'
 
-            }),
+            # }),
             # Segundo ayudante
-            'ayudante2do': Select(attrs={
-                'class': 'form-control select2',
-                'style': 'width: 100%'
-            }),
-            # Impresora -> lo trae la orden
-            'impresora': Select(attrs={
-                'class': 'form-control select2',
-                'style': 'width: 100%'
-            }),
-        }
+            # 'ayudante2do': Select(attrs={
+            #     'class': 'form-control select2',
+            #     'style': 'width: 100%'
+            # }),
+            # # Impresora -> lo trae la orden
+            # 'impresora': Select(attrs={
+            #     'class': 'form-control select2',
+            #     'style': 'width: 100%'
+            # }),
+            }

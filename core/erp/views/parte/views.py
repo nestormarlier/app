@@ -9,7 +9,7 @@ from django.views.generic import CreateView
 from core.erp.forms import ParteForm
 from core.erp.mixins import ValidatePermissionRequiredMixin
 
-from core.erp.models import OrdenesProduccion, ParteImpresion
+from core.erp.models import OrdenesProduccion, ParteImpresion, Impresora, Parada
 
 class ParteCreateView(LoginRequiredMixin, ValidatePermissionRequiredMixin, CreateView):
     model = ParteImpresion

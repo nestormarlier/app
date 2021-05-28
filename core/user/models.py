@@ -25,3 +25,7 @@ class User(AbstractUser):
     def toJSON(self):
         item= model_to_dict(self)
         item['categoria']= self.categoria.toJSON()
+        return item
+        
+    def __str__(self):
+        return self.first_name + ' ' + self.last_name

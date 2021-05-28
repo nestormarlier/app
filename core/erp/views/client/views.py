@@ -41,7 +41,6 @@ class ClientListView(LoginRequiredMixin, ValidatePermissionRequiredMixin, ListVi
         context['entity'] = 'Clientes'
         return context
 
-
 class ClientCreateView(LoginRequiredMixin, ValidatePermissionRequiredMixin, CreateView):
     model = Client
     form_class = ClientForm
@@ -73,7 +72,6 @@ class ClientCreateView(LoginRequiredMixin, ValidatePermissionRequiredMixin, Crea
         context['list_url'] = self.success_url
         context['action'] = 'add'
         return context
-
 
 class ClientUpdateView(LoginRequiredMixin, ValidatePermissionRequiredMixin, UpdateView):
     model = Client
@@ -107,7 +105,6 @@ class ClientUpdateView(LoginRequiredMixin, ValidatePermissionRequiredMixin, Upda
         context['list_url'] = self.success_url
         context['action'] = 'edit'
         return context
-
 
 class ClientDeleteView(LoginRequiredMixin, ValidatePermissionRequiredMixin, DeleteView):
     model = Client

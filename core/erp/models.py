@@ -143,7 +143,7 @@ class Impresora(models.Model):
     # EN NULO SI SIGUE ACTIVO
 
     def __str__(self):
-        return "%s" % self.nombre
+        return self.nombre
 
     def toJSON(self):
         item = model_to_dict(self)
@@ -336,7 +336,7 @@ class ParteImpresion(models.Model):
     maquinista = models.ForeignKey(User, verbose_name='Maquinista', on_delete=models.DO_NOTHING,
                                    related_name='maquinista', db_column='maquinista')
     supervisor = models.ForeignKey(User, verbose_name='Supervisor', on_delete=models.DO_NOTHING,
-                                   related_name='supervisor', db_column='supervisor')
+                                   related_name='supervisor', db_column='supervisor', help_text="Seleccione Supervisor de turno")
     ayudante1ero = models.ForeignKey(User, verbose_name='Primer ayudante', on_delete=models.DO_NOTHING,
                                      related_name='ayudante1er', db_column='ayudante1er')
     ayudante2do = models.ForeignKey(User, verbose_name='Segundo ayudante', on_delete=models.DO_NOTHING,
