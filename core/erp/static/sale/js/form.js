@@ -12,10 +12,9 @@ var vents = {
         var subtotal = 0.00;
         var iva = $('input[name="iva"]').val();
         $.each(this.items.products, function (pos, dict) {
+            dict.pos = pos;
             dict.subtotal = dict.cant * parseFloat(dict.pvp);
             subtotal += dict.subtotal;
-            //console.log(subtotal);
-            // console.log(dict);
         });
         this.items.subtotal = subtotal;
         this.items.iva = this.items.subtotal * iva;
@@ -26,8 +25,8 @@ var vents = {
         $('input[name="total"]').val(this.items.total.toFixed(2));
     },
     add: function (item) {
-        this.items.products.push(item); /* Acumulo los items */
-        this.list(); /* Genero la lista por cada item con su formato definido en la funcion */
+        this.items.products.push(item);
+        this.list();
     },
     list: function () {
         this.calculate_invoice();
@@ -35,15 +34,14 @@ var vents = {
             responsive: true,
             autoWidth: false,
             destroy: true,
-            deferRender: true,
             data: this.items.products,
             columns: [
-                { "data": "id" },
-                { "data": "name" },
-                { "data": "cat.name" },
-                { "data": "pvp" },
-                { "data": "cant" },
-                { "data": "subtotal" },
+                {"data": "id"},
+                {"data": "name"},
+                {"data": "cat.name"},
+                {"data": "pvp"},
+                {"data": "cant"},
+                {"data": "subtotal"},
             ],
             columnDefs: [
                 {
@@ -51,7 +49,7 @@ var vents = {
                     class: 'text-center',
                     orderable: false,
                     render: function (data, type, row) {
-                        return '<a rel="remove" class="btn btn-danger btn-xs btn-flat"><i class="fas fa-trash-alt"></i></a>'
+                        return '<a rel="remove" class="btn btn-danger btn-xs btn-flat" style="color: white;"><i class="fas fa-trash-alt"></i></a>';
                     }
                 },
                 {
@@ -67,7 +65,7 @@ var vents = {
                     class: 'text-center',
                     orderable: false,
                     render: function (data, type, row) {
-                        return '<input type="text" name="cant" class="form-control form-control-sm  input-sm" autocomplete="off" value="' + row.cant + '">'
+                        return '<input type="text" name="cant" class="form-control form-control-sm input-sm" autocomplete="off" value="' + row.cant + '">';
                     }
                 },
                 {
@@ -80,19 +78,19 @@ var vents = {
                 },
             ],
             rowCallback(row, data, displayNum, displayIndex, dataIndex) {
-                // console.log(row);
-                // console.log(data);
+
                 $(row).find('input[name="cant"]').TouchSpin({
                     min: 1,
-                    max: 1000000,
+                    max: 1000000000,
                     step: 1
                 });
+
             },
             initComplete: function (settings, json) {
 
             }
         });
-    }
+    },
 };
 
 $(function () {
@@ -117,13 +115,12 @@ $(function () {
         maxboostedstep: 10,
         postfix: '%'
     }).on('change', function () {
-        // console.clear();
-        // console.log($(this).val());
         vents.calculate_invoice();
     })
-        .val(0.21); /* Defino el valor por defecto del IVA */
+        .val(0.12);
 
-    // Busqueda de mis productos
+    // search products
+
     $('input[name="search"]').autocomplete({
         source: function (request, response) {
             $.ajax({
@@ -144,24 +141,40 @@ $(function () {
         },
         delay: 500,
         minLength: 1,
-        function (event, ui) {
-            event.pselectreventDefault(); /* si no coloco esto no puedo llamar a this.val('') */
-            // console.clear();
-            ui.item.cant = 1; /* le paso la cantidad el producto seleccionado */
-            ui.item.subtotal = 0.00; /* le paso la cantidad el producto seleccionado */
+        select: function (event, ui) {
+            event.preventDefault();
+            console.clear();
+            ui.item.cant = 1;
+            ui.item.subtotal = 0.00;
             console.log(vents.items);
-            vents.add(ui.item); /* llamo a la funcion add que acumula y lista los productos en la datatable */
+            vents.add(ui.item);
             $(this).val('');
         }
     });
 
-    // evento cantidad
-    $('#tblProducts tbody').on('change', 'input[name="cant"]', function () {
-        console.clear;
-        var cant = parseInt($(this).val());
-        var tr = tblProducts.cell($(this).closest('td, li')).index();
-        vents.items.products[tr.row].cant = cant;
-        vents.calculate_invoice();
-        $('td:eq(5)', tblProducts.row(tr.row).node()).html('$' + vents.items.products[tr.row].subtotal.toFixed(2));
-    })
+    $('.btnRemoveAll').on('click', function () {
+        if (vents.items.products.length === 0) return false;
+        alert_action('Notificación', '¿Estas seguro de eliminar todos los items de tu detalle?', function () {
+            vents.items.products = [];
+            vents.list();
+        });
+    });
+
+    // event cant
+    $('#tblProducts tbody')
+        .on('click', 'a[rel="remove"]', function () {
+            var tr = tblProducts.cell($(this).closest('td, li')).index();
+            alert_action('Notificación', '¿Estas seguro de eliminar el producto de tu detalle?', function () {
+                vents.items.products.splice(tr.row, 1);
+                vents.list();
+            });
+        })
+        .on('change', 'input[name="cant"]', function () {
+            console.clear();
+            var cant = parseInt($(this).val());
+            var tr = tblProducts.cell($(this).closest('td, li')).index();
+            vents.items.products[tr.row].cant = cant;
+            vents.calculate_invoice();
+            $('td:eq(5)', tblProducts.row(tr.row).node()).html('$' + vents.items.products[tr.row].subtotal.toFixed(2));
+        });
 });
