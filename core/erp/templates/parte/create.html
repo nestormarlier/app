@@ -106,8 +106,8 @@
                                                     <th>Opciones</th>
                                                     <th>Fecha inicio</th>
                                                     <th>Demora</th>
+                                                    {{ form.parada }}
                                                     <th>Fecha fin</th>
-                                                    <th>Opciones</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -226,10 +226,6 @@
                                         </div>
                                         <div class="card-body">
                                             <hr>
-                                            <h2>
-                                                Impresora
-                                                {{ form.ordenes }}
-                                            </h2>
                                             <h2>
                                                 Ficha técnica
                                                 {{ form.ordenes.pedido_venta.fichaTecnica }}

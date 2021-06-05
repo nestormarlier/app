@@ -2,7 +2,7 @@ from datetime import datetime
 
 from django.forms import *
 
-from core.erp.models import Category, Product, Client, Sale,Impresora, ParteImpresion
+from core.erp.models import Category, Product, Client, Sale,Impresora, ParteImpresion, Parada
 from core.user.models import User
 
 

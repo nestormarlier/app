@@ -26,10 +26,12 @@ class ParteCreateView(LoginRequiredMixin, ValidatePermissionRequiredMixin, Creat
     def post(self, request, *args, **kwargs):
         data = {}
         try:
+            
             action = request.POST['action']
             if action == 'searchdata':
                 data = []
-                for i in OrdenesProduccion.objects.all():
+                # OrdenesProduccion.objects.all()
+                for i in OrdenesProduccion.objects.filter(impresora=self.kwargs.get('impresora_id')):
                     data.append(i.toJSON())
             else:
                 data['error'] = 'Ha ocurrido un error'

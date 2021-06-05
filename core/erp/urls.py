@@ -35,5 +35,5 @@ urlpatterns = [
     # produccion
     path('produccion/list/', ProduccionListView.as_view(), name='produccion_list'),
     # parte
-    path('parte/add/', ParteCreateView.as_view(), name='parte_create'),
+    path('parte/add/<impresora_id>', ParteCreateView.as_view(), name='parte_create'),
 ]
