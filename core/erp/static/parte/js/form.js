@@ -40,10 +40,11 @@ $(function () {
             dataSrc: ""
         },
         columns: [
-            { "data": "impresora_id" },
+            { "data": "opciones" },
             { "data": "id" },
-            { "data": "impresora.nombre" },
             { "data": "pedido_venta.id" },
+            { "data": "pedido_venta.fichaTecnica" },
+            { "data": "pedido_venta.fichaTecnica" },
             { "data": "pedido_venta.fecha_entrega" },
         ],
         columnDefs: [
@@ -58,7 +59,7 @@ $(function () {
                 }
             },
             {
-                targets: [5],
+                targets: [6],
                 class: 'text-center',
                 orderable: false,
                 render: function (data, type, row) {
@@ -68,7 +69,7 @@ $(function () {
             },
         ],
         initComplete: function (settings, json) {
-            console.log('cargado');
+            // console.log('cargado');
         }
     });
 
@@ -121,95 +122,95 @@ $(function () {
     });
 });
     // Parte y registro de la produccion
-    $('#tblParteCabecera').DataTable({
-        responsive: true,
-        autoWidth: false,
-        destroy: true,
-        deferRender: true,
-        "searching": false,
-        "bPaginate": false,
-        "ordering": false,
-        "info": false,
-        ajax: {
-            url: window.location.pathname,
-            type: 'POST',
-            data: {
-                'action': 'searchdata'
-            },
-            dataSrc: ""
-        },
-        columns: [
-            // { "data": "impresoras.activo" },
-            // { "data": "categoria.id" },
-            // { "data": "ayudante1ero" },
-            // { "data": "ayudante2do" },
-            // { "data": "impresora.nombre" },
-            // { "data": "pedido_venta.fichaTecnica" },
-            // { "data": "options" },
-        ],
-        columnDefs: [
-            // {
-            //     targets: [-1],
-            //     class: 'text-center',
-            //     orderable: false,
-            //     render: function (data, type, row) {
-            //         var buttons = '<a href="/erp/parte/update/' + row.id + '/" class="btn btn-warning btn-xs btn-flat"><i class="fas fa-edit"></i></a> ';
-            //         buttons += '<a href="/erp/parte/delete/' + row.id + '/" type="button" class="btn btn-danger btn-xs btn-flat"><i class="fas fa-trash-alt"></i></a>';
-            //         return buttons;
-            //     }
-            // },
-            // {
-            //     targets: [0],
-            //     class: 'text-center',
-            //     orderable: false,
-            //     render: function (data, type, row) {
-            //         return '<select name="" class="form-control"><option>Coche</option><option>Avión</option><option>Tren</option></select>'
-            //     }
-            // },
-        ],
-        initComplete: function (settings, json) {
+    // $('#tblParteCabecera').DataTable({
+    //     responsive: true,
+    //     autoWidth: false,
+    //     destroy: true,
+    //     deferRender: true,
+    //     "searching": false,
+    //     "bPaginate": false,
+    //     "ordering": false,
+    //     "info": false,
+    //     ajax: {
+    //         url: window.location.pathname,
+    //         type: 'POST',
+    //         data: {
+    //             'action': 'searchdata'
+    //         },
+    //         dataSrc: ""
+    //     },
+    //     columns: [
+    //         // { "data": "impresoras.activo" },
+    //         // { "data": "categoria.id" },
+    //         // { "data": "ayudante1ero" },
+    //         // { "data": "ayudante2do" },
+    //         // { "data": "impresora.nombre" },
+    //         // { "data": "pedido_venta.fichaTecnica" },
+    //         // { "data": "options" },
+    //     ],
+    //     columnDefs: [
+    //         // {
+    //         //     targets: [-1],
+    //         //     class: 'text-center',
+    //         //     orderable: false,
+    //         //     render: function (data, type, row) {
+    //         //         var buttons = '<a href="/erp/parte/update/' + row.id + '/" class="btn btn-warning btn-xs btn-flat"><i class="fas fa-edit"></i></a> ';
+    //         //         buttons += '<a href="/erp/parte/delete/' + row.id + '/" type="button" class="btn btn-danger btn-xs btn-flat"><i class="fas fa-trash-alt"></i></a>';
+    //         //         return buttons;
+    //         //     }
+    //         // },
+    //         // {
+    //         //     targets: [0],
+    //         //     class: 'text-center',
+    //         //     orderable: false,
+    //         //     render: function (data, type, row) {
+    //         //         return '<select name="" class="form-control"><option>Coche</option><option>Avión</option><option>Tren</option></select>'
+    //         //     }
+    //         // },
+    //     ],
+    //     initComplete: function (settings, json) {
 
-        }
-    });
-    $('#tblParteCuerpo').DataTable({
-        responsive: true,
-        autoWidth: false,
-        destroy: true,
-        deferRender: true,
-        "searching": false,
-        "bPaginate": false,
-        "ordering": false,
-        "info": false,
-        ajax: {
-            url: window.location.pathname,
-            type: 'POST',
-            data: {
-                'action': 'searchdata'
-            },
-            dataSrc: ""
-        },
-        columns: [
-            { "data": "ordenes.pedido_venta.kg_prod" },
-            { "data": "kg_producidos" },
-            { "data": "mts_prod" },
-            { "data": "mts_producidos" },
-            { "data": "kg_registro" },
-            { "data": "metros_registro" },
-            { "data": "options" },
-        ],
-        columnDefs: [
-            {
-                targets: [-1],
-                class: 'text-center',
-                orderable: false,
-                render: function (data, type, row) {
-                    var buttons = '<a href="/erp/parte/update/' + row.id + '/" class="btn btn-warning btn-xs btn-flat"><i class="fas fa-edit"></i></a> ';
-                    buttons += '<a href="/erp/parte/delete/' + row.id + '/" type="button" class="btn btn-danger btn-xs btn-flat"><i class="fas fa-trash-alt"></i></a>';
-                    return buttons;
-                }
-            },
-        ],
-        initComplete: function (settings, json) {
+    //     }
+    // });
+    // $('#tblParteCuerpo').DataTable({
+    //     responsive: true,
+    //     autoWidth: false,
+    //     destroy: true,
+    //     deferRender: true,
+    //     "searching": false,
+    //     "bPaginate": false,
+    //     "ordering": false,
+    //     "info": false,
+    //     ajax: {
+    //         url: window.location.pathname,
+    //         type: 'POST',
+    //         data: {
+    //             'action': 'searchdata'
+    //         },
+    //         dataSrc: ""
+    //     },
+    //     columns: [
+    //         { "data": "ordenes.pedido_venta.kg_prod" },
+    //         { "data": "kg_producidos" },
+    //         { "data": "mts_prod" },
+    //         { "data": "mts_producidos" },
+    //         { "data": "kg_registro" },
+    //         { "data": "metros_registro" },
+    //         { "data": "options" },
+    //     ],
+    //     columnDefs: [
+    //         {
+    //             targets: [-1],
+    //             class: 'text-center',
+    //             orderable: false,
+    //             render: function (data, type, row) {
+    //                 var buttons = '<a href="/erp/parte/update/' + row.id + '/" class="btn btn-warning btn-xs btn-flat"><i class="fas fa-edit"></i></a> ';
+    //                 buttons += '<a href="/erp/parte/delete/' + row.id + '/" type="button" class="btn btn-danger btn-xs btn-flat"><i class="fas fa-trash-alt"></i></a>';
+    //                 return buttons;
+    //             }
+    //         },
+    //     ],
+    //     initComplete: function (settings, json) {
 
-        }
-    });
+    //     }
+    // });
