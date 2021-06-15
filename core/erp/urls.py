@@ -7,6 +7,7 @@ from core.erp.views.tests.views import TestView
 from core.erp.views.sale.views import *
 from core.erp.views.produccion.views import *
 from core.erp.views.parte.views import *
+from core.erp.views.ficha.views import *
 
 app_name = 'erp'
 
@@ -36,4 +37,6 @@ urlpatterns = [
     path('produccion/list/', ProduccionListView.as_view(), name='produccion_list'),
     # parte
     path('parte/add/<impresora_id>', ParteCreateView.as_view(), name='parte_create'),
+    # ficha tecnica + setup
+    path('parte/ficha/<id>', FichaView.as_view(), name='ficha_view'),
 ]

@@ -67,6 +67,17 @@ $(function () {
                     return buttons;
                 }
             },
+            {
+                targets: [3],
+                class: 'text-center',
+                orderable: false,
+                render: function (data, type, row) {
+                    // return '<a href="parte/ficha/' + row.pedido_venta.fichaTecnica + '/">';
+                    // return '' + row.pedido_venta.fichaTecnica + '';
+                    return '<a href="/erp/parte/ficha/'+ row.pedido_venta.fichaTecnica + '">'+ row.pedido_venta.fichaTecnica + '</a>';
+                    // console.log(row.pedido_venta.fichaTecnica);
+                }
+            },
         ],
         initComplete: function (settings, json) {
             // console.log('cargado');
